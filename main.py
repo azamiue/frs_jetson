@@ -12,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 mtcnn = MTCNN(keep_all=True, device=device)
 
 # Đọc video thay vì dùng webcam
-video_path = "path/to/your/video.mp4"  # Thay bằng đường dẫn tới video của bạn
+video_path = r"C:\Users\thainq\Desktop\capstone\frs_jetson\vid_test\test.mp4"  # Thay bằng đường dẫn tới video của bạn
 cap = cv2.VideoCapture(video_path)
 
 # Biến lưu trữ thông số benchmark
@@ -69,7 +69,7 @@ while frame_count < 200:  # Chạy đúng 200 frame
     cv2.putText(frame, f"Infer Time: {inference_time:.4f}s", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
     # Hiển thị video
-    cv2.imshow('Face Detection - MTCNN', frame)
+    # cv2.imshow('Face Detection - MTCNN', frame)
 
     # Ghi log vào file
     with open(log_file, "a") as f:
