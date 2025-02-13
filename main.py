@@ -31,7 +31,17 @@ with open(log_file, "w") as f:
     f.write(system_info + "\n")
     f.write("Frame, FPS, Processing Time (s), Inference Time (s), Faces Detected\n")
 
-while frame_count < 200:  # Chạy đúng 200 frame
+# Thêm lựa chọn cho người dùng
+option = input("Chọn chế độ (1: No Limit, 2: Limit 200 frames): ")
+if option == "1":
+    limit = float('inf')  # Không giới hạn
+elif option == "2":
+    limit = 200  # Giới hạn 200 frame
+else:
+    print("Lựa chọn không hợp lệ. Mặc định là 200 frames.")
+    limit = 200
+
+while frame_count < limit:  # Chạy tùy thuộc vào lựa chọn
     start_time = time.time()
 
     ret, frame = cap.read()
@@ -69,15 +79,11 @@ while frame_count < 200:  # Chạy đúng 200 frame
     cv2.putText(frame, f"Infer Time: {inference_time:.4f}s", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
     # Hiển thị video
-    # cv2.imshow('Face Detection - MTCNN', frame)
+    cv2.imshow('Face Detection - MTCNN', frame)
 
     # Ghi log vào file
     with open(log_file, "a") as f:
         f.write(f"{frame_count}, {fps:.2f}, {processing_time:.4f}, {inference_time:.4f}, {face_count}\n")
-
-    # Kiểm tra nếu đã đạt đủ 200 frame
-    if frame_count >= 200:
-        break
 
     # Nhấn 'q' để thoát sớm
     if cv2.waitKey(1) & 0xFF == ord('q'):
